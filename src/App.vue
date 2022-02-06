@@ -43,11 +43,14 @@ export default class App extends Vue {
 .container {
   border: #2c3e50 solid;
   padding: 0.5rem;
+  font-family: monospace;
 }
 .correct {
-  color: green;
+  color: white;
+  background-color: green;
 }
 .wrong {
-  color: red;
+  color: white;
+  background-color: indianred;
 }
 </style>
