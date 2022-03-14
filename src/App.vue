@@ -1,14 +1,18 @@
 <template>
   <div id="app">
     <the-header></the-header>
-    <div class="container">
+    <div class="container" @keydown="onKeyPress($event)">
       <span class="correct">l</span>
       <span class="wrong">o</span>
-      <span>r</span>
+      <span class="current">r</span>
       <span>e</span>
       <span>m</span>
-      <span v-for="letter in letters" :key="letter">{{ letter }}</span>
-      <!-- for each letter create a span -->
+      <span
+        v-for="(character, index) in characters"
+        :key="`${index}-${character}`"
+        :class="{ current: isCurrent(index) }"
+        >{{ character }}</span
+      >
     </div>
   </div>
 </template>
@@ -27,7 +31,31 @@ import TheHeader from "./components/TheHeader.vue";
 export default class App extends Vue {
   text =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-  letters = [...this.text];
+  characters = [...this.text];
+  selectedIndex = 0;
+  isCurrent(index: number) {
+    return index === this.selectedIndex;
+  }
+
+  onKeyPress(event: any) {
+    const character = event.key;
+    if (character === this.characters[this.selectedIndex]) {
+      console.log(`Correct hit`);
+      // bind correct class
+      // remove current class
+      this.selectedIndex++;
+      // attach current class
+    } else {
+      console.log("Wrong hit");
+      // bind wrong class
+    }
+  }
+  created() {
+    window.addEventListener("keypress", this.onKeyPress);
+  }
+  destroyed() {
+    window.removeEventListener("keypress", this.onKeyPress);
+  }
 }
 </script>
 
@@ -52,5 +80,8 @@ export default class App extends Vue {
 .wrong {
   color: white;
   background-color: indianred;
+}
+.current {
+  border: #2c3e50 solid;
 }
 </style>
