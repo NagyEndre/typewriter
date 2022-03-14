@@ -7,59 +7,75 @@
       >
     </div>
     <div class="container" @keydown="onKeyPress($event)">
-      <span class="correct">l</span>
-      <span class="wrong">o</span>
-      <span class="current">r</span>
-      <span>e</span>
-      <span>m</span>
-      <span
-        v-for="(character, index) in characters"
-        :key="`${index}-${character}`"
+      <character
+        v-for="(entry, index) in entries"
+        :key="`${index}-${entry.character}`"
+        :character="entry.character"
+        :status="entry.status"
         :class="{ current: isCurrent(index) }"
-        >{{ character }}</span
       >
+      </character>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import SampleText from "./components/SampleText.vue";
 import TheHeader from "./components/TheHeader.vue";
+import Character from "./components/Character.vue";
+import { CharacterStatus } from "./utils/types";
 
 @Component({
   components: {
-    SampleText,
     TheHeader,
+    Character,
   },
 })
 export default class App extends Vue {
   text =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
   characters = [...this.text];
+  entries = this.characters.map((character) => {
+    return { character: character, status: CharacterStatus.Untyped };
+  });
+
   selectedIndex = 0;
   errorCount = 0;
   correctCount = 0;
+
   isCurrent(index: number) {
     return index === this.selectedIndex;
   }
 
   onKeyPress(event: any) {
-    const character = event.key;
-    if (character === this.characters[this.selectedIndex]) {
-      console.log(`Correct hit`);
-      // bind correct class
-      this.selectedIndex++;
-      this.correctCount++;
+    const isCorrectHit = event.key === this.characters[this.selectedIndex];
+    if (isCorrectHit) {
+      this.handleCorrectHit();
     } else {
-      console.log("Wrong hit");
-      this.errorCount++;
-      // bind wrong class
+      this.handleWrongHit();
     }
   }
+
+  handleCorrectHit() {
+    console.log(`Correct hit`);
+    let status = this.entries[this.selectedIndex].status;
+    if (status !== CharacterStatus.Wrong) {
+      this.entries[this.selectedIndex].status = CharacterStatus.Correct;
+    }
+    this.selectedIndex++;
+    this.correctCount++;
+  }
+
+  handleWrongHit() {
+    console.log("Wrong hit");
+    this.entries[this.selectedIndex].status = CharacterStatus.Wrong;
+    this.errorCount++;
+  }
+
   created() {
     window.addEventListener("keypress", this.onKeyPress);
   }
+
   destroyed() {
     window.removeEventListener("keypress", this.onKeyPress);
   }
@@ -79,14 +95,6 @@ export default class App extends Vue {
   border: #2c3e50 solid;
   padding: 0.5rem;
   font-family: monospace;
-}
-.correct {
-  color: white;
-  background-color: green;
-}
-.wrong {
-  color: white;
-  background-color: indianred;
 }
 .current {
   border: #2c3e50 solid;
