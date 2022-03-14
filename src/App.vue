@@ -1,6 +1,11 @@
 <template>
   <div id="app">
     <the-header></the-header>
+    <div>
+      <span
+        >Correct hit: {{ correctCount }}. Error count: {{ errorCount }}</span
+      >
+    </div>
     <div class="container" @keydown="onKeyPress($event)">
       <span class="correct">l</span>
       <span class="wrong">o</span>
@@ -33,6 +38,8 @@ export default class App extends Vue {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
   characters = [...this.text];
   selectedIndex = 0;
+  errorCount = 0;
+  correctCount = 0;
   isCurrent(index: number) {
     return index === this.selectedIndex;
   }
@@ -44,9 +51,11 @@ export default class App extends Vue {
       // bind correct class
       // remove current class
       this.selectedIndex++;
+      this.correctCount++;
       // attach current class
     } else {
       console.log("Wrong hit");
+      this.errorCount++;
       // bind wrong class
     }
   }
