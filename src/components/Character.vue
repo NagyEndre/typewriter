@@ -16,7 +16,7 @@ export default class Character extends Vue {
   @Prop(Number)
   readonly status!: number;
 
-  correctStyle = { color: "white", backgroundColor: "green" };
+  correctStyle = { color: "white", backgroundColor: "seagreen" };
   wrongStyle = { color: "white", backgroundColor: "indianred" };
 
   get characterStyleClasses() {
