@@ -49,10 +49,8 @@ export default class App extends Vue {
     if (character === this.characters[this.selectedIndex]) {
       console.log(`Correct hit`);
       // bind correct class
-      // remove current class
       this.selectedIndex++;
       this.correctCount++;
-      // attach current class
     } else {
       console.log("Wrong hit");
       this.errorCount++;
