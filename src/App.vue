@@ -32,12 +32,20 @@ import { CharacterStatus } from "./utils/types";
   },
 })
 export default class App extends Vue {
-  text =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-  characters = [...this.text];
-  entries = this.characters.map((character) => {
-    return { character: character, status: CharacterStatus.Untyped };
-  });
+  readonly url = "https://programming-quotes-api.herokuapp.com/Quotes/random";
+  readonly lorem =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+  text = this.lorem;
+
+  get characters() {
+    return [...this.text];
+  }
+
+  get entries() {
+    return this.characters.map((character) => {
+      return { character: character, status: CharacterStatus.Untyped };
+    });
+  }
 
   selectedIndex = 0;
   errorCount = 0;
@@ -79,15 +87,31 @@ export default class App extends Vue {
 
   created() {
     window.addEventListener("keypress", this.onKeyPress);
+    fetch(this.url)
+      .then((response) => response.json())
+      .then((data) => {
+        this.text = data.en;
+      });
+  }
+  async getText() {
+    return fetch(this.url)
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.en);
+        return data.en;
+      });
   }
 
   resetApp() {
     this.correctCount = 0;
     this.errorCount = 0;
     this.selectedIndex = 0;
-    this.entries = this.characters.map((character) => {
-      return { character: character, status: CharacterStatus.Untyped };
-    });
+    // change not the entries but, the text
+    fetch(this.url)
+      .then((response) => response.json())
+      .then((data) => {
+        this.text = data.en;
+      });
   }
 
   destroyed() {
