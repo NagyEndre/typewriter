@@ -48,11 +48,16 @@ export default class App extends Vue {
   }
 
   onKeyPress(event: any) {
-    const isCorrectHit = event.key === this.characters[this.selectedIndex];
-    if (isCorrectHit) {
-      this.handleCorrectHit();
+    const isEndReached = this.selectedIndex === this.characters.length;
+    if (isEndReached) {
+      this.resetApp();
     } else {
-      this.handleWrongHit();
+      const isCorrectHit = event.key === this.characters[this.selectedIndex];
+      if (isCorrectHit) {
+        this.handleCorrectHit();
+      } else {
+        this.handleWrongHit();
+      }
     }
   }
 
@@ -74,6 +79,15 @@ export default class App extends Vue {
 
   created() {
     window.addEventListener("keypress", this.onKeyPress);
+  }
+
+  resetApp() {
+    this.correctCount = 0;
+    this.errorCount = 0;
+    this.selectedIndex = 0;
+    this.entries = this.characters.map((character) => {
+      return { character: character, status: CharacterStatus.Untyped };
+    });
   }
 
   destroyed() {
