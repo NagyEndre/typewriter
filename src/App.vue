@@ -35,7 +35,11 @@ export default class App extends Vue {
   readonly url = "https://programming-quotes-api.herokuapp.com/Quotes/random";
   readonly lorem =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+
   text = this.lorem;
+  selectedIndex = 0;
+  errorCount = 0;
+  correctCount = 0;
 
   get characters() {
     return [...this.text];
@@ -46,10 +50,6 @@ export default class App extends Vue {
       return { character: character, status: CharacterStatus.Untyped };
     });
   }
-
-  selectedIndex = 0;
-  errorCount = 0;
-  correctCount = 0;
 
   isCurrent(index: number) {
     return index === this.selectedIndex;
@@ -85,20 +85,11 @@ export default class App extends Vue {
     this.errorCount++;
   }
 
-  created() {
-    window.addEventListener("keypress", this.onKeyPress);
+  setText() {
     fetch(this.url)
       .then((response) => response.json())
       .then((data) => {
         this.text = data.en;
-      });
-  }
-  async getText() {
-    return fetch(this.url)
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data.en);
-        return data.en;
       });
   }
 
@@ -106,12 +97,12 @@ export default class App extends Vue {
     this.correctCount = 0;
     this.errorCount = 0;
     this.selectedIndex = 0;
-    // change not the entries but, the text
-    fetch(this.url)
-      .then((response) => response.json())
-      .then((data) => {
-        this.text = data.en;
-      });
+    this.setText();
+  }
+
+  created() {
+    window.addEventListener("keypress", this.onKeyPress);
+    this.setText();
   }
 
   destroyed() {
