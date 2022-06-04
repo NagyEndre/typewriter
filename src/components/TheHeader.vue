@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Type Writer</h1>
+    <img src="../assets/logo-192x192.png" alt="logo" />
   </header>
 </template>
 
@@ -11,4 +11,8 @@ import { Component, Vue } from "vue-property-decorator";
 export default class TheHeader extends Vue {}
 </script>
 
-<style></style>
+<style scoped>
+header {
+  margin-bottom: 2rem;
+}
+</style>

@@ -113,7 +113,7 @@ export default class App extends Vue {
 
 <style>
 body {
-  background-color: wheat;
+  background-color: darkkhaki;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
