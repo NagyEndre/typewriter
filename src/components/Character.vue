@@ -1,5 +1,5 @@
 <template>
-  <span :style="characterStyleClasses">{{ character }}</span>
+  <span :class="characterStyleClasses">{{ character }}</span>
 </template>
 
 <script lang="ts">
@@ -16,17 +16,25 @@ export default class Character extends Vue {
   @Prop(Number)
   readonly status!: number;
 
-  correctStyle = { color: "white", backgroundColor: "seagreen" };
-  wrongStyle = { color: "white", backgroundColor: "indianred" };
-
   get characterStyleClasses() {
     const classes = [];
     if (this.status === CharacterStatus.Correct) {
-      classes.push(this.correctStyle);
+      classes.push("correct");
     } else if (this.status === CharacterStatus.Wrong) {
-      classes.push(this.wrongStyle);
+      classes.push("wrong");
     }
     return classes;
   }
 }
 </script>
+
+<style scoped>
+.correct {
+  color: white;
+  background-color: seagreen;
+}
+.wrong {
+  color: white;
+  background-color: indianred;
+}
+</style>
