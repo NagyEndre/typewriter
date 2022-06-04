@@ -6,7 +6,7 @@
         >Correct hit: {{ correctCount }}. Error count: {{ errorCount }}</span
       >
     </div>
-    <div class="container" @keydown="onKeyPress($event)">
+    <div class="character-container" @keydown="onKeyPress($event)">
       <character
         v-for="(entry, index) in entries"
         :key="`${index}-${entry.character}`"
@@ -124,9 +124,11 @@ body {
   color: #2c3e50;
   margin-top: 60px;
 }
-.container {
+.character-container {
   border: #2c3e50 solid;
   padding: 0.5rem;
+  width: 90%;
+  margin: auto;
   font-family: monospace;
 }
 .current {
