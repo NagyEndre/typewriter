@@ -35,14 +35,18 @@ export default class App extends Vue {
   readonly url = "https://programming-quotes-api.herokuapp.com/Quotes/random";
   readonly lorem =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+  readonly newLine = "\n";
 
   text = this.lorem;
   selectedIndex = 0;
   errorCount = 0;
   correctCount = 0;
+  multiLineSample =
+    'export class CloudStorageStrategy implements StorageStrategy {\n    public store(data: string) {\n        console.log("TODO: Upload data to cloud.");\n    }\n}';
 
   get characters() {
-    return [...this.text];
+    return [...this.multiLineSample];
+    // return [...this.text];
   }
 
   get entries() {
@@ -60,12 +64,19 @@ export default class App extends Vue {
     if (isEndReached) {
       this.resetApp();
     } else {
-      const isCorrectHit = event.key === this.characters[this.selectedIndex];
-      if (isCorrectHit) {
+      if (this.isCorrectHit(event.key)) {
         this.handleCorrectHit();
       } else {
         this.handleWrongHit();
       }
+    }
+  }
+
+  isCorrectHit(key: string): boolean {
+    if (key === "Enter" && this.characters[this.selectedIndex] == this.newLine)
+      return true;
+    else {
+      return key === this.characters[this.selectedIndex];
     }
   }
 
@@ -125,6 +136,8 @@ body {
   margin-top: 60px;
 }
 .character-container {
+  white-space: break-spaces;
+  text-align: left;
   border: #2c3e50 solid;
   padding: 0.5rem;
   width: 90%;
