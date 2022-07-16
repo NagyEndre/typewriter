@@ -40,6 +40,7 @@ export default class App extends Vue {
   readonly newLine = "\n";
 
   text = this.lorem;
+  currentCodeSnippet = codeSnippets.head;
   selectedIndex = 0;
   errorCount = 0;
   correctCount = 0;
@@ -105,7 +106,9 @@ export default class App extends Vue {
           });
         break;
       case ExerciseType.CodeSnippet:
-        this.text = codeSnippets[0];
+        this.currentCodeSnippet =
+          this.currentCodeSnippet?.next || this.currentCodeSnippet?.list?.head;
+        this.text = this.currentCodeSnippet?.data;
         break;
       default:
         break;
