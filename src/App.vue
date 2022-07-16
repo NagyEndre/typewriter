@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <the-header></the-header>
+    <exercise-selector></exercise-selector>
     <div>
       <span
         >Correct hit: {{ correctCount }}. Error count: {{ errorCount }}</span
@@ -22,12 +23,14 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import TheHeader from "./components/TheHeader.vue";
+import ExerciseSelector from "./components/ExerciseSelector.vue";
 import Character from "./components/Character.vue";
 import { CharacterState } from "./utils/types";
 
 @Component({
   components: {
     TheHeader,
+    ExerciseSelector,
     Character,
   },
 })
