@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <the-header></the-header>
-    <exercise-selector></exercise-selector>
     <div>
       <span
         >Correct hit: {{ correctCount }}. Error count: {{ errorCount }}</span
@@ -22,17 +21,17 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { mapGetters } from "vuex";
 import TheHeader from "./components/TheHeader.vue";
-import ExerciseSelector from "./components/ExerciseSelector.vue";
 import Character from "./components/Character.vue";
-import { CharacterState } from "./utils/types";
+import { CharacterState, codeSnippets, ExerciseType } from "./utils/types";
 
 @Component({
   components: {
     TheHeader,
-    ExerciseSelector,
     Character,
   },
+  computed: mapGetters(["exerciseType"]),
 })
 export default class App extends Vue {
   readonly url = "https://programming-quotes-api.herokuapp.com/Quotes/random";
@@ -44,12 +43,9 @@ export default class App extends Vue {
   selectedIndex = 0;
   errorCount = 0;
   correctCount = 0;
-  multiLineSample =
-    'export class CloudStorageStrategy implements StorageStrategy {\n    public store(data: string) {\n        console.log("TODO: Upload data to cloud.");\n    }\n}';
-
+  exerciseType!: any;
   get characters() {
-    return [...this.multiLineSample];
-    // return [...this.text];
+    return [...this.text];
   }
 
   get entries() {
@@ -100,11 +96,20 @@ export default class App extends Vue {
   }
 
   setText() {
-    fetch(this.url)
-      .then((response) => response.json())
-      .then((data) => {
-        this.text = data.en;
-      });
+    switch (this.exerciseType) {
+      case ExerciseType.ProgrammingQuote:
+        fetch(this.url)
+          .then((response) => response.json())
+          .then((data) => {
+            this.text = data.en;
+          });
+        break;
+      case ExerciseType.CodeSnippet:
+        this.text = codeSnippets[0];
+        break;
+      default:
+        break;
+    }
   }
 
   resetApp() {
