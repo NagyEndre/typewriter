@@ -1,4 +1,4 @@
-export enum CharacterStatus {
+export enum CharacterState {
   Untyped,
   Correct,
   Wrong,

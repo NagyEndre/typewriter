@@ -23,7 +23,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import TheHeader from "./components/TheHeader.vue";
 import Character from "./components/Character.vue";
-import { CharacterStatus } from "./utils/types";
+import { CharacterState } from "./utils/types";
 
 @Component({
   components: {
@@ -51,7 +51,7 @@ export default class App extends Vue {
 
   get entries() {
     return this.characters.map((character) => {
-      return { character: character, status: CharacterStatus.Untyped };
+      return { character: character, status: CharacterState.Untyped };
     });
   }
 
@@ -83,8 +83,8 @@ export default class App extends Vue {
   handleCorrectHit() {
     console.log(`Correct hit`);
     let status = this.entries[this.selectedIndex].status;
-    if (status !== CharacterStatus.Wrong) {
-      this.entries[this.selectedIndex].status = CharacterStatus.Correct;
+    if (status !== CharacterState.Wrong) {
+      this.entries[this.selectedIndex].status = CharacterState.Correct;
     }
     this.selectedIndex++;
     this.correctCount++;
@@ -92,7 +92,7 @@ export default class App extends Vue {
 
   handleWrongHit() {
     console.log("Wrong hit");
-    this.entries[this.selectedIndex].status = CharacterStatus.Wrong;
+    this.entries[this.selectedIndex].status = CharacterState.Wrong;
     this.errorCount++;
   }
 

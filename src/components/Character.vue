@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { CharacterStatus } from "../utils/types";
+import { CharacterState } from "../utils/types";
 
 @Component({
   components: {},
@@ -18,9 +18,9 @@ export default class Character extends Vue {
 
   get characterStyleClasses() {
     const classes = [];
-    if (this.status === CharacterStatus.Correct) {
+    if (this.status === CharacterState.Correct) {
       classes.push("correct");
-    } else if (this.status === CharacterStatus.Wrong) {
+    } else if (this.status === CharacterState.Wrong) {
       classes.push("wrong");
     }
     return classes;
