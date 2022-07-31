@@ -13,7 +13,10 @@ export default new Vuex.Store({
       return state.exerciseType;
     },
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    setExerciseType(state, type: number) {
+      state.exerciseType = type;
+    },
+  },
   modules: {},
 });
