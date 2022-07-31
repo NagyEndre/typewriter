@@ -27,6 +27,7 @@ import TheHeader from "./components/TheHeader.vue";
 import ExerciseSelector from "./components/ExerciseSelector.vue";
 import Character from "./components/Character.vue";
 import { CharacterState, codeSnippets, ExerciseType } from "./utils/types";
+import LinkedListNode from "ts-linked-list/dist/LinkedListNode";
 
 @Component({
   components: {
@@ -43,7 +44,8 @@ export default class App extends Vue {
   readonly newLine = "\n";
 
   text = this.lorem;
-  currentCodeSnippet = codeSnippets.head;
+  currentCodeSnippet: LinkedListNode<string> | null | undefined =
+    codeSnippets.head;
   selectedIndex = 0;
   errorCount = 0;
   correctCount = 0;
@@ -111,7 +113,7 @@ export default class App extends Vue {
       case ExerciseType.CodeSnippet:
         this.currentCodeSnippet =
           this.currentCodeSnippet?.next || this.currentCodeSnippet?.list?.head;
-        this.text = this.currentCodeSnippet?.data;
+        this.text = this.currentCodeSnippet!.data;
         break;
       default:
         break;
