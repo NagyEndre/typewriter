@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <the-header></the-header>
-    <exercise-selector></exercise-selector>
+    <exercise-selector @selection-changed="setText"></exercise-selector>
     <div>
       <span
         >Correct hit: {{ correctCount }}. Error count: {{ errorCount }}</span

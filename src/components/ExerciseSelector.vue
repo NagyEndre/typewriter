@@ -1,7 +1,7 @@
 <template>
   <div>
     <select v-model="selected">
-      <option v-for="option in options" :key="option" :value="option[1]">
+      <option v-for="option in options" :key="option[0]" :value="option[1]">
         {{ option[0] }}
       </option>
     </select>
@@ -25,6 +25,7 @@ export default class ExerciseSelector extends Vue {
   @Watch("selected")
   private onSelectedChanged(newSelected: number): void {
     this.$store.commit("setExerciseType", this.options[newSelected][1]);
+    this.$emit("selection-changed");
   }
 }
 </script>
