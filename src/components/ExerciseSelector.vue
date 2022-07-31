@@ -30,4 +30,12 @@ export default class ExerciseSelector extends Vue {
 }
 </script>
 
-<style></style>
+<style scoped>
+select {
+  background-color: darkgreen;
+  color: white;
+  border-radius: 0.5rem;
+  border-color: 1px solid grey;
+  padding: 0.5rem;
+}
+</style>
