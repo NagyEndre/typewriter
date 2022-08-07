@@ -27,6 +27,7 @@ import TheHeader from "./components/TheHeader.vue";
 import ExerciseSelector from "./components/ExerciseSelector.vue";
 import Character from "./components/Character.vue";
 import { CharacterState, codeSnippets, ExerciseType } from "./utils/types";
+import { lorem, randomProgramQuoteUrl, newLineCharacter } from "./utils/consts";
 import LinkedListNode from "ts-linked-list/dist/LinkedListNode";
 
 @Component({
@@ -38,12 +39,9 @@ import LinkedListNode from "ts-linked-list/dist/LinkedListNode";
   computed: mapGetters(["exerciseType"]),
 })
 export default class App extends Vue {
-  readonly url = "https://programming-quotes-api.herokuapp.com/Quotes/random";
-  readonly lorem =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-  readonly newLine = "\n";
+  readonly url = randomProgramQuoteUrl;
 
-  text = this.lorem;
+  text = lorem;
   currentCodeSnippet: LinkedListNode<string> | null | undefined =
     codeSnippets.head;
   selectedIndex = 0;
@@ -78,7 +76,10 @@ export default class App extends Vue {
   }
 
   isCorrectHit(key: string): boolean {
-    if (key === "Enter" && this.characters[this.selectedIndex] == this.newLine)
+    if (
+      key === "Enter" &&
+      this.characters[this.selectedIndex] == newLineCharacter
+    )
       return true;
     else {
       return key === this.characters[this.selectedIndex];
