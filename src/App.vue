@@ -27,6 +27,8 @@ import { CharacterState, codeSnippets, ExerciseType } from "./utils/types";
 import { lorem, randomProgramQuoteUrl, newLineCharacter } from "./utils/consts";
 import LinkedListNode from "ts-linked-list/dist/LinkedListNode";
 
+type characterEntry = { character: string; status: CharacterState };
+
 @Component({
   components: {
     TheHeader,
@@ -46,21 +48,22 @@ export default class App extends Vue {
   errorCount = 0;
   correctCount = 0;
   exerciseType!: any;
-  get characters() {
+
+  get characters(): string[] {
     return [...this.text];
   }
 
-  get entries() {
+  get entries(): characterEntry[] {
     return this.characters.map((character) => {
-      return { character: character, status: CharacterState.Untyped };
+      return { character, status: CharacterState.Untyped };
     });
   }
 
-  isCurrent(index: number) {
+  isCurrent(index: number): boolean {
     return index === this.selectedIndex;
   }
 
-  onKeyPress(event: any) {
+  onKeyPress(event: any): void {
     const isEndReached = this.selectedIndex === this.characters.length;
     if (isEndReached) {
       this.resetApp();
@@ -84,7 +87,7 @@ export default class App extends Vue {
     }
   }
 
-  handleCorrectHit() {
+  handleCorrectHit(): void {
     console.log(`Correct hit`);
     let status = this.entries[this.selectedIndex].status;
     if (status !== CharacterState.Wrong) {
@@ -94,13 +97,13 @@ export default class App extends Vue {
     this.correctCount++;
   }
 
-  handleWrongHit() {
+  handleWrongHit(): void {
     console.log("Wrong hit");
     this.entries[this.selectedIndex].status = CharacterState.Wrong;
     this.errorCount++;
   }
 
-  setText() {
+  setText(): void {
     switch (this.exerciseType) {
       case ExerciseType.ProgrammingQuote:
         fetch(this.url)
@@ -119,19 +122,19 @@ export default class App extends Vue {
     }
   }
 
-  resetApp() {
+  resetApp(): void {
     this.correctCount = 0;
     this.errorCount = 0;
     this.selectedIndex = 0;
     this.setText();
   }
 
-  created() {
+  created(): void {
     window.addEventListener("keypress", this.onKeyPress);
     this.setText();
   }
 
-  destroyed() {
+  destroyed(): void {
     window.removeEventListener("keypress", this.onKeyPress);
   }
 }
