@@ -37,5 +37,6 @@ select {
   border-radius: 0.5rem;
   border-color: 1px solid grey;
   padding: 0.5rem;
+  font-size: 1.5rem;
 }
 </style>
