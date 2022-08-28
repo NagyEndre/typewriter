@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <the-header></the-header>
-    <exercise-selector @selection-changed="setText"></exercise-selector>
+    <exercise-selector @selection-changed="resetApp"></exercise-selector>
     <stat-display :correctCount="correctCount" :errorCount="errorCount" />
     <div class="character-container" @keydown="onKeyPress($event)">
       <character
@@ -157,7 +157,8 @@ body {
   white-space: break-spaces;
   text-align: left;
   border: #2c3e50 solid;
-  padding: 0.5rem;
+  border-radius: 0.5em;
+  padding: 0.8rem;
   width: 90%;
   margin: auto;
   font-family: monospace;
