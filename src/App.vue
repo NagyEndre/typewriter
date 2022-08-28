@@ -142,7 +142,10 @@ export default class App extends Vue {
 
 <style>
 body {
-  background-color: darkkhaki;
+  background-color: whitesmoke;
+  background-image: url("./assets/plants.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -154,6 +157,7 @@ body {
   margin-top: 60px;
 }
 .character-container {
+  background: whitesmoke;
   white-space: break-spaces;
   text-align: left;
   border: #2c3e50 solid;

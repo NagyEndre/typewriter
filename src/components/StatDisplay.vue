@@ -24,3 +24,12 @@ export default class StatDisplay extends Vue {
   private readonly errorCount!: number;
 }
 </script>
+
+<style scoped>
+div {
+  margin: 1rem;
+}
+span {
+  color: white;
+}
+</style>
