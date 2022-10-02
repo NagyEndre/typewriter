@@ -15,4 +15,8 @@ export default class TheHeader extends Vue {}
 header {
   margin-bottom: 2rem;
 }
+img {
+  box-shadow: 0px 0px 20px 10px gold;
+  border-radius: 50%;
+}
 </style>
