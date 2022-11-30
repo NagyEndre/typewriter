@@ -1,4 +1,4 @@
-# typewriter
+# TypeWriter
 
 Practice typing on your keyboard with some quotes or with design patterns.
 

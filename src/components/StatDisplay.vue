@@ -28,8 +28,12 @@ export default class StatDisplay extends Vue {
 <style scoped>
 div {
   margin: 1rem;
+  display: inline-block;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.6);
 }
 span {
-  color: white;
+  color: black;
 }
 </style>

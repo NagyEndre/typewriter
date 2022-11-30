@@ -23,8 +23,13 @@ import TheHeader from "./components/TheHeader.vue";
 import ExerciseSelector from "./components/ExerciseSelector.vue";
 import StatDisplay from "./components/StatDisplay.vue";
 import Character from "./components/Character.vue";
-import { CharacterState, codeSnippets, ExerciseType } from "./utils/types";
-import { lorem, randomProgramQuoteUrl, newLineCharacter } from "./utils/consts";
+import { CharacterState, ExerciseType } from "./utils/types";
+import {
+  lorem,
+  randomProgramQuoteUrl,
+  newLineCharacter,
+  codeSnippets,
+} from "./utils/consts";
 import LinkedListNode from "ts-linked-list/dist/LinkedListNode";
 
 type characterEntry = { character: string; status: CharacterState };
@@ -157,7 +162,7 @@ body {
   margin-top: 60px;
 }
 .character-container {
-  background: whitesmoke;
+  background: rgba(255, 255, 255, 0.9);
   white-space: break-spaces;
   text-align: left;
   border: #2c3e50 solid;
