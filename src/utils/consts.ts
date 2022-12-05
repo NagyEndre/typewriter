@@ -9,7 +9,7 @@ export const randomProgramQuoteUrl =
 export const newLineCharacter = "\n";
 
 const singleton =
-  "class Singleton {\n  private static instance: Singleton;\n\n  private constructor() {}\n\n  public static getInstance(): Singleton {\n    if (Singleton.instance === undefined) {\n      Singleton.instance = new Singleton();\n    }\n    return Singleton.instance;\n  }\n}";
+  "class Singleton {\n  private static instance: Singleton;\n\n  private constructor() {}\n\n  public static getInstance(): Singleton {\n    if (!Singleton.instance) {\n      Singleton.instance = new Singleton();\n    }\n    return Singleton.instance;\n  }\n}";
 const strategy =
   'interface StorageStrategy {\n    store(data: string): void;\n}\n\nclass CloudStorageStrategy implements StorageStrategy {\n    public store(data: string) {\n        console.log("Uploading data to cloud.");\n    }\n}';
 const template_method =
