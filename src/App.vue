@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <the-header></the-header>
-    <exercise-selector @selection-changed="resetApp"></exercise-selector>
     <stat-display :correctCount="correctCount" :errorCount="errorCount" />
     <div class="character-container" @keydown="onKeyPress($event)">
       <character
@@ -20,7 +19,6 @@
 import { Component, Vue } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 import TheHeader from "./components/TheHeader.vue";
-import ExerciseSelector from "./components/ExerciseSelector.vue";
 import StatDisplay from "./components/StatDisplay.vue";
 import Character from "./components/Character.vue";
 import { CharacterState, ExerciseType } from "./utils/types";
@@ -37,7 +35,6 @@ type characterEntry = { character: string; status: CharacterState };
 @Component({
   components: {
     TheHeader,
-    ExerciseSelector,
     StatDisplay,
     Character,
   },
@@ -110,13 +107,6 @@ export default class App extends Vue {
 
   setText(): void {
     switch (this.exerciseType) {
-      case ExerciseType.ProgrammingQuote:
-        fetch(this.url)
-          .then((response) => response.json())
-          .then((data) => {
-            this.text = data.en;
-          });
-        break;
       case ExerciseType.CodeSnippet:
         this.currentCodeSnippet =
           this.currentCodeSnippet?.next || this.currentCodeSnippet?.list?.head;

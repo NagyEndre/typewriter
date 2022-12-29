@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    exerciseType: ExerciseType.ProgrammingQuote,
+    exerciseType: ExerciseType.CodeSnippet,
   },
   getters: {
     exerciseType(state) {
