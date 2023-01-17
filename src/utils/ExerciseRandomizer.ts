@@ -26,3 +26,7 @@ export default class ExerciseRandomizer<T> {
     return randomIndex;
   }
 }
+
+export function getRandomNumber(max: number): number {
+  return Math.floor(Math.random() * max);
+}

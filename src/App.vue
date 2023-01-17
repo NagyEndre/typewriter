@@ -26,9 +26,11 @@ import {
   lorem,
   randomProgramQuoteUrl,
   newLineCharacter,
-  codeSnippets,
+  codeSnippetArray,
 } from "./utils/consts";
-import LinkedListNode from "ts-linked-list/dist/LinkedListNode";
+import ExerciseRandomizer, {
+  getRandomNumber,
+} from "./utils/ExerciseRandomizer";
 
 type characterEntry = { character: string; status: CharacterState };
 
@@ -44,8 +46,10 @@ export default class App extends Vue {
   readonly url = randomProgramQuoteUrl;
 
   text = lorem;
-  currentCodeSnippet: LinkedListNode<string> | null | undefined =
-    codeSnippets.head;
+  private randomizer = new ExerciseRandomizer(
+    getRandomNumber,
+    codeSnippetArray.length
+  );
   selectedIndex = 0;
   errorCount = 0;
   correctCount = 0;
@@ -108,9 +112,8 @@ export default class App extends Vue {
   setText(): void {
     switch (this.exerciseType) {
       case ExerciseType.CodeSnippet:
-        this.currentCodeSnippet =
-          this.currentCodeSnippet?.next || this.currentCodeSnippet?.list?.head;
-        this.text = this.currentCodeSnippet!.data;
+        const index = this.randomizer.getExerciseIndex();
+        this.text = codeSnippetArray[index];
         break;
       default:
         break;
