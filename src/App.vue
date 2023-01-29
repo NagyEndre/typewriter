@@ -110,13 +110,8 @@ export default class App extends Vue {
   }
 
   setText(): void {
-    switch (this.exerciseType) {
-      case ExerciseType.CodeSnippet:
-        const index = this.randomizer.getExerciseIndex();
-        this.text = codeSnippetArray[index];
-        break;
-      default:
-        break;
+    if (this.exerciseType === ExerciseType.CodeSnippet) {
+      this.text = codeSnippetArray[this.randomizer.getExerciseIndex()];
     }
   }
 

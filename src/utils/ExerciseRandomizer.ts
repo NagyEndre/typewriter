@@ -1,8 +1,8 @@
 export default class ExerciseRandomizer<T> {
-  private exerciseCount: number;
+  private readonly exerciseCount: number;
   private previousIndex: number | null = null;
 
-  private randomizerFn: (max: number) => number;
+  private readonly randomizerFn: (max: number) => number;
 
   constructor(randomizerFn: (max: number) => number, exerciseCount: number) {
     if (exerciseCount < 1) {
@@ -13,16 +13,17 @@ export default class ExerciseRandomizer<T> {
   }
 
   public getExerciseIndex(): number {
+    if (this.exerciseCount === 1) {
+      return 0;
+    }
     const max = this.exerciseCount;
 
     let randomIndex = this.randomizerFn(max);
-    if (this.exerciseCount > 1) {
-      while (randomIndex === this.previousIndex) {
-        randomIndex = this.randomizerFn(max);
-      }
+    while (randomIndex === this.previousIndex) {
+      randomIndex = this.randomizerFn(max);
     }
-    this.previousIndex = randomIndex;
 
+    this.previousIndex = randomIndex;
     return randomIndex;
   }
 }
