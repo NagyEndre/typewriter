@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <the-header></the-header>
+    <the-header />
     <stat-display :correctCount="correctCount" :errorCount="errorCount" />
     <div class="character-container" @keydown="onKeyPress($event)">
       <character
@@ -26,7 +26,7 @@ import {
   lorem,
   randomProgramQuoteUrl,
   newLineCharacter,
-  codeSnippetArray,
+  codeSnippets,
 } from "./utils/consts";
 import ExerciseRandomizer, {
   getRandomNumber,
@@ -48,7 +48,7 @@ export default class App extends Vue {
   text = lorem;
   private randomizer = new ExerciseRandomizer(
     getRandomNumber,
-    codeSnippetArray.length
+    codeSnippets.length
   );
   selectedIndex = 0;
   errorCount = 0;
@@ -111,7 +111,7 @@ export default class App extends Vue {
 
   setText(): void {
     if (this.exerciseType === ExerciseType.CodeSnippet) {
-      this.text = codeSnippetArray[this.randomizer.getExerciseIndex()];
+      this.text = codeSnippets[this.randomizer.getExerciseIndex()];
     }
   }
 

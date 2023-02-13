@@ -1,5 +1,3 @@
-import LinkedList from "ts-linked-list";
-
 export const lorem =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
@@ -15,9 +13,4 @@ const strategy =
 const template_method =
   'abstract class TestSequence {\n  public execute() {\n    this.prepareEnvironment();\n    this.userPreparation();\n    this.run();\n    this.userCleanUp();\n    this.collectResults();\n  }\n\n  protected abstract prepareEnvironment(): void;\n\n  protected userPreparation(): void {\n    console.log("No user preparation is executed.");\n  }\n\n  protected abstract run(): void;\n\n  protected userCleanUp(): void {\n    console.log("No user clean up is executed.");\n  }\n\n  protected abstract collectResults(): void;\n}';
 
-export const codeSnippetArray = [strategy, singleton, template_method];
-export const codeSnippets = new LinkedList(
-  strategy,
-  singleton,
-  template_method
-);
+export const codeSnippets = [strategy, singleton, template_method];
