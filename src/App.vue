@@ -22,12 +22,7 @@ import TheHeader from "./components/TheHeader.vue";
 import StatDisplay from "./components/StatDisplay.vue";
 import Character from "./components/Character.vue";
 import { CharacterState, ExerciseType } from "./utils/types";
-import {
-  lorem,
-  randomProgramQuoteUrl,
-  newLineCharacter,
-  codeSnippets,
-} from "./utils/consts";
+import { lorem, newLineCharacter, codeSnippets } from "./utils/consts";
 import ExerciseRandomizer, {
   getRandomNumber,
 } from "./utils/ExerciseRandomizer";
@@ -43,17 +38,20 @@ type characterEntry = { character: string; status: CharacterState };
   computed: mapGetters(["exerciseType"]),
 })
 export default class App extends Vue {
-  readonly url = randomProgramQuoteUrl;
+  public errorCount = 0;
 
-  text = lorem;
+  public correctCount = 0;
+
+  private text = lorem;
+
   private randomizer = new ExerciseRandomizer(
     getRandomNumber,
     codeSnippets.length
   );
-  selectedIndex = 0;
-  errorCount = 0;
-  correctCount = 0;
-  exerciseType!: any;
+
+  private selectedIndex = 0;
+
+  private exerciseType!: any;
 
   get characters(): string[] {
     return [...this.text];
