@@ -1,6 +1,6 @@
 # TypeWriter
 
-Practice typing on your keyboard with some quotes or with design patterns.
+Practice typing on your keyboard with some design patterns.
 
 # Try the TypeWriter!
 
@@ -16,6 +16,12 @@ npm install
 
 ```
 npm run serve
+```
+
+### Runs unit tests
+
+```
+npm run test
 ```
 
 ### Compiles and minifies for production
