@@ -1,6 +1,6 @@
 <template>
   <header>
-    <img src="../assets/logo-192x192.png" alt="logo" />
+    <img src="../assets/logo-192x192.png" alt="logo" draggable="false" />
   </header>
 </template>
 
