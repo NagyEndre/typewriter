@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <the-header></the-header>
+    <the-header />
     <stat-display :correctCount="correctCount" :errorCount="errorCount" />
     <div class="character-container" @keydown="onKeyPress($event)">
       <character
@@ -22,13 +22,10 @@ import TheHeader from "./components/TheHeader.vue";
 import StatDisplay from "./components/StatDisplay.vue";
 import Character from "./components/Character.vue";
 import { CharacterState, ExerciseType } from "./utils/types";
-import {
-  lorem,
-  randomProgramQuoteUrl,
-  newLineCharacter,
-  codeSnippets,
-} from "./utils/consts";
-import LinkedListNode from "ts-linked-list/dist/LinkedListNode";
+import { lorem, newLineCharacter, codeSnippets } from "./utils/consts";
+import ExerciseRandomizer, {
+  getRandomNumber,
+} from "./utils/ExerciseRandomizer";
 
 type characterEntry = { character: string; status: CharacterState };
 
@@ -41,15 +38,20 @@ type characterEntry = { character: string; status: CharacterState };
   computed: mapGetters(["exerciseType"]),
 })
 export default class App extends Vue {
-  readonly url = randomProgramQuoteUrl;
+  public errorCount = 0;
 
-  text = lorem;
-  currentCodeSnippet: LinkedListNode<string> | null | undefined =
-    codeSnippets.head;
-  selectedIndex = 0;
-  errorCount = 0;
-  correctCount = 0;
-  exerciseType!: any;
+  public correctCount = 0;
+
+  private text = lorem;
+
+  private randomizer = new ExerciseRandomizer(
+    getRandomNumber,
+    codeSnippets.length
+  );
+
+  private selectedIndex = 0;
+
+  private exerciseType!: any;
 
   get characters(): string[] {
     return [...this.text];
@@ -106,14 +108,8 @@ export default class App extends Vue {
   }
 
   setText(): void {
-    switch (this.exerciseType) {
-      case ExerciseType.CodeSnippet:
-        this.currentCodeSnippet =
-          this.currentCodeSnippet?.next || this.currentCodeSnippet?.list?.head;
-        this.text = this.currentCodeSnippet!.data;
-        break;
-      default:
-        break;
+    if (this.exerciseType === ExerciseType.CodeSnippet) {
+      this.text = codeSnippets[this.randomizer.getExerciseIndex()];
     }
   }
 
