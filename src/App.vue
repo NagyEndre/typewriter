@@ -72,6 +72,7 @@ export default class App extends Vue {
     if (isEndReached) {
       this.resetApp();
     } else {
+      event.preventDefault();
       if (this.isCorrectHit(event.key)) {
         this.handleCorrectHit();
       } else {
