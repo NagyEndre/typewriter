@@ -4,6 +4,11 @@ export enum CharacterState {
   Wrong,
 }
 
+export enum HitType {
+  Correct,
+  Wrong,
+}
+
 export enum ExerciseType {
   ProgrammingQuote,
   CodeSnippet,

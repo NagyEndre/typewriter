@@ -5,16 +5,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { defineComponent } from "vue";
 
-@Component
-export default class TheHeader extends Vue {}
+export default defineComponent({
+  name: "TheHeader",
+});
 </script>
 
 <style scoped>
 header {
   margin-bottom: 2rem;
 }
+
 img {
   box-shadow: 0px 0px 20px 10px gold;
   border-radius: 50%;

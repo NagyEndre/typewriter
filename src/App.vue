@@ -1,138 +1,68 @@
 <template>
-  <div id="app">
-    <the-header />
-    <stat-display :correctCount="correctCount" :errorCount="errorCount" />
-    <div class="character-container" @keydown="onKeyPress($event)">
-      <character
-        v-for="(entry, index) in entries"
-        :key="`${index}-${entry.character}`"
-        :character="entry.character"
-        :status="entry.status"
-        :class="{ current: isCurrent(index) }"
-      >
-      </character>
-    </div>
-  </div>
+  <the-header />
+  <stat-display :correctCount="correctHitCount" :errorCount="errorHitCount" />
+  <the-type-area
+    :text="text"
+    @hitType="handleHitResult"
+    @finished="resetApp"
+  ></the-type-area>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { mapGetters } from "vuex";
+import { defineComponent } from "vue";
 import TheHeader from "./components/TheHeader.vue";
+import TheTypeArea from "./components/TheTypeArea.vue";
 import StatDisplay from "./components/StatDisplay.vue";
-import Character from "./components/Character.vue";
-import { CharacterState, ExerciseType } from "./utils/types";
-import { lorem, newLineCharacter, codeSnippets } from "./utils/consts";
+import { HitType } from "./utils/types";
+import { codeSnippets } from "./utils/consts";
 import ExerciseRandomizer, {
   getRandomNumber,
 } from "./utils/ExerciseRandomizer";
 
-type characterEntry = { character: string; status: CharacterState };
-
-@Component({
+export default defineComponent({
+  name: "App",
   components: {
     TheHeader,
+    TheTypeArea,
     StatDisplay,
-    Character,
   },
-  computed: mapGetters(["exerciseType"]),
-})
-export default class App extends Vue {
-  public errorCount = 0;
-
-  public correctCount = 0;
-
-  private text = lorem;
-
-  private randomizer = new ExerciseRandomizer(
-    getRandomNumber,
-    codeSnippets.length
-  );
-
-  private selectedIndex = 0;
-
-  private exerciseType!: any;
-
-  get characters(): string[] {
-    return [...this.text];
-  }
-
-  get entries(): characterEntry[] {
-    return this.characters.map((character) => {
-      return { character, status: CharacterState.Untyped };
-    });
-  }
-
-  isCurrent(index: number): boolean {
-    return index === this.selectedIndex;
-  }
-
-  onKeyPress(event: any): void {
-    const isEndReached = this.selectedIndex === this.characters.length;
-    if (isEndReached) {
-      this.resetApp();
-    } else {
-      event.preventDefault();
-      if (this.isCorrectHit(event.key)) {
-        this.handleCorrectHit();
-      } else {
-        this.handleWrongHit();
+  data() {
+    return {
+      correctHitCount: 0,
+      errorHitCount: 0,
+      text: "Lorem Ipsum",
+      randomizer: new ExerciseRandomizer(getRandomNumber, codeSnippets.length),
+    };
+  },
+  created() {
+    this.setText();
+  },
+  methods: {
+    handleHitResult(type: HitType) {
+      switch (type) {
+        case HitType.Correct:
+          this.correctHitCount++;
+          break;
+        case HitType.Wrong:
+          this.errorHitCount++;
+          break;
+        default:
+          break;
       }
-    }
-  }
-
-  isCorrectHit(key: string): boolean {
-    if (
-      key === "Enter" &&
-      this.characters[this.selectedIndex] == newLineCharacter
-    )
-      return true;
-    else {
-      return key === this.characters[this.selectedIndex];
-    }
-  }
-
-  handleCorrectHit(): void {
-    console.log(`Correct hit`);
-    let status = this.entries[this.selectedIndex].status;
-    if (status !== CharacterState.Wrong) {
-      this.entries[this.selectedIndex].status = CharacterState.Correct;
-    }
-    this.selectedIndex++;
-    this.correctCount++;
-  }
-
-  handleWrongHit(): void {
-    console.log("Wrong hit");
-    this.entries[this.selectedIndex].status = CharacterState.Wrong;
-    this.errorCount++;
-  }
-
-  setText(): void {
-    if (this.exerciseType === ExerciseType.CodeSnippet) {
+    },
+    resetApp() {
+      this.correctHitCount = 0;
+      this.errorHitCount = 0;
+      this.setText();
+    },
+    setText(): void {
       this.text = codeSnippets[this.randomizer.getExerciseIndex()];
-    }
-  }
-
-  resetApp(): void {
-    this.correctCount = 0;
-    this.errorCount = 0;
-    this.selectedIndex = 0;
-    this.setText();
-  }
-
-  created(): void {
-    window.addEventListener("keypress", this.onKeyPress);
-    this.setText();
-  }
-
-  destroyed(): void {
-    window.removeEventListener("keypress", this.onKeyPress);
-  }
-}
+    },
+  },
+});
 </script>
 
-<style>
+<style lang="less">
 body {
   background-color: whitesmoke;
   background-image: url("./assets/plants.jpg");
@@ -147,19 +77,5 @@ body {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-.character-container {
-  background: rgba(255, 255, 255, 0.9);
-  white-space: break-spaces;
-  text-align: left;
-  border: #2c3e50 solid;
-  border-radius: 0.5em;
-  padding: 0.8rem;
-  width: 90%;
-  margin: auto;
-  font-family: monospace;
-}
-.current {
-  border: #2c3e50 solid;
 }
 </style>

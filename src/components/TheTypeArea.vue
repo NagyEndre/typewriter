@@ -1,0 +1,125 @@
+<template>
+  <div
+    tabindex="0"
+    class="show-on-focus character-container"
+    autofocus
+    @keydown="onKeyPress"
+  >
+    <character-element
+      v-for="(character, index) in characters"
+      :key="`${index}-${character}`"
+      :character="character"
+      :status="states[index]"
+      :class="{ current: isCurrent(index) }"
+    >
+    </character-element>
+  </div>
+</template>
+
+<script lang="ts">
+import { newLineCharacter } from "@/utils/consts";
+import { defineComponent } from "vue";
+import { CharacterState, HitType } from "../utils/types";
+import CharacterElement from "./CharacterElement.vue";
+
+export default defineComponent({
+  name: "TheTypeArea",
+  components: {
+    CharacterElement,
+  },
+  props: {
+    text: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      selectedIndex: 0,
+      states: Array(this.text.length).fill(0),
+    };
+  },
+  computed: {
+    characters(): string[] {
+      return [...this.text];
+    },
+  },
+  methods: {
+    onKeyPress(event: { key: string; preventDefault: () => void }) {
+      console.log(event.key);
+      const keysToIgnore = ["Control", "Shift", "AltGraph"];
+      if (keysToIgnore.includes(event.key)) return;
+      const isEndReached = this.selectedIndex === this.characters.length;
+      if (isEndReached) {
+        this.selectedIndex = 0;
+        this.$emit("finished");
+        this.reSetStates();
+      } else {
+        event.preventDefault();
+        if (this.isCorrectHit(event.key)) {
+          this.handleCorrectHit();
+        } else {
+          this.handleWrongHit();
+        }
+      }
+    },
+    isCorrectHit(key: string): boolean {
+      if (
+        key === "Enter" &&
+        this.characters[this.selectedIndex] == newLineCharacter
+      )
+        return true;
+      else {
+        return key === this.characters[this.selectedIndex];
+      }
+    },
+    handleCorrectHit(): void {
+      console.log(`Correct hit`);
+      let status = this.states[this.selectedIndex];
+      if (status !== CharacterState.Wrong) {
+        this.states[this.selectedIndex] = CharacterState.Correct;
+      }
+      this.selectedIndex++;
+      this.$emit("hitType", HitType.Correct);
+    },
+    handleWrongHit(): void {
+      console.log("Wrong hit");
+      this.states[this.selectedIndex] = CharacterState.Wrong;
+      this.$emit("hitType", HitType.Wrong);
+    },
+    isCurrent(index: number): boolean {
+      return index === this.selectedIndex;
+    },
+    reSetStates(): void {
+      this.states = Array(this.text.length).fill(0);
+    },
+  },
+});
+</script>
+
+<style lang="less" scoped>
+.show-on-focus {
+  filter: blur(5px);
+  transition: filter 0.2s;
+}
+
+.show-on-focus:focus {
+  filter: blur(0);
+}
+
+.character-container {
+  background: rgba(255, 255, 255, 0.9);
+  white-space: break-spaces;
+  text-align: left;
+  border: #2c3e50 solid;
+  border-radius: 0.5em;
+  padding: 0.8rem;
+  width: 90%;
+  margin: auto;
+  font-family: monospace;
+}
+
+.current {
+  border: #2c3e50 solid;
+}
+</style>

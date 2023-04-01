@@ -5,24 +5,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { defineComponent } from "vue";
 
-@Component({
-  components: {},
-})
-export default class StatDisplay extends Vue {
-  @Prop({
-    type: Number,
-    required: true,
-  })
-  private readonly correctCount!: number;
-
-  @Prop({
-    type: Number,
-    required: true,
-  })
-  private readonly errorCount!: number;
-}
+export default defineComponent({
+  name: "StatDisplay",
+  props: {
+    correctCount: Number,
+    errorCount: Number,
+  },
+});
 </script>
 
 <style scoped>
