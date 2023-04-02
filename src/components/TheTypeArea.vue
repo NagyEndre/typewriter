@@ -37,6 +37,7 @@ export default defineComponent({
     return {
       selectedIndex: 0,
       states: Array(this.text.length).fill(0),
+      keysToIgnore: ["Control", "Shift", "AltGraph"],
     };
   },
   computed: {
@@ -47,15 +48,18 @@ export default defineComponent({
   methods: {
     onKeyPress(event: { key: string; preventDefault: () => void }) {
       console.log(event.key);
-      const keysToIgnore = ["Control", "Shift", "AltGraph"];
-      if (keysToIgnore.includes(event.key)) return;
+
+      if (this.keysToIgnore.includes(event.key)) return;
+
       const isEndReached = this.selectedIndex === this.characters.length;
       if (isEndReached) {
         this.selectedIndex = 0;
         this.$emit("finished");
-        this.reSetStates();
+        this.resetStates();
       } else {
-        event.preventDefault();
+        const isSpacePressed = event.key === " ";
+        if (isSpacePressed) event.preventDefault();
+
         if (this.isCorrectHit(event.key)) {
           this.handleCorrectHit();
         } else {
@@ -90,7 +94,7 @@ export default defineComponent({
     isCurrent(index: number): boolean {
       return index === this.selectedIndex;
     },
-    reSetStates(): void {
+    resetStates(): void {
       this.states = Array(this.text.length).fill(0);
     },
   },
