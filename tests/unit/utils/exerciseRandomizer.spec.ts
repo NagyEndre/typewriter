@@ -19,7 +19,7 @@ describe("ExerciseRandomizer tests", () => {
     const expectedExerciseIndex = 0;
     const selector = new ExerciseRandomizer(randomizer, 1);
 
-    const exercise = selector.getExerciseIndex();
+    const exercise = selector.getNextExerciseIndex();
 
     expect(exercise).toBe(expectedExerciseIndex);
   });
@@ -33,8 +33,8 @@ describe("ExerciseRandomizer tests", () => {
       .mockReturnValueOnce(1);
     const selector = new ExerciseRandomizer(randomizer, 2);
 
-    selector.getExerciseIndex();
-    const index = selector.getExerciseIndex();
+    selector.getNextExerciseIndex();
+    const index = selector.getNextExerciseIndex();
 
     expect(index).toBe(expectedIndex);
   });
@@ -42,8 +42,8 @@ describe("ExerciseRandomizer tests", () => {
   test("Should handle multiple getExerciseIndex calls when there is only 1 exercise ", () => {
     const selector = new ExerciseRandomizer(randomizer, 1);
 
-    const firstIndex = selector.getExerciseIndex();
-    const secondIndex = selector.getExerciseIndex();
+    const firstIndex = selector.getNextExerciseIndex();
+    const secondIndex = selector.getNextExerciseIndex();
 
     expect(firstIndex).toBe(secondIndex);
   });

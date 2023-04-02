@@ -1,4 +1,4 @@
-export default class ExerciseRandomizer<T> {
+export default class ExerciseRandomizer {
   private readonly exerciseCount: number;
   private previousIndex: number | null = null;
 
@@ -15,7 +15,7 @@ export default class ExerciseRandomizer<T> {
     this.randomIndexGenerator = randomIndexGenerator;
   }
 
-  public getExerciseIndex(): number {
+  public getNextExerciseIndex(): number {
     if (this.exerciseCount === 1) {
       return 0;
     }

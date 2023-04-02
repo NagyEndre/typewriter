@@ -56,7 +56,7 @@ export default defineComponent({
       this.setText();
     },
     setText(): void {
-      this.text = codeSnippets[this.randomizer.getExerciseIndex()];
+      this.text = codeSnippets[this.randomizer.getNextExerciseIndex()];
     },
   },
 });
