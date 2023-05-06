@@ -14,10 +14,7 @@ import TheHeader from "./components/TheHeader.vue";
 import TheTypeArea from "./components/TheTypeArea.vue";
 import StatDisplay from "./components/StatDisplay.vue";
 import { HitType } from "./utils/types";
-import { codeSnippets } from "./utils/consts";
-import ExerciseRandomizer, {
-  getRandomNumber,
-} from "./utils/ExerciseRandomizer";
+import { lorem } from "./utils/consts";
 
 export default defineComponent({
   name: "App",
@@ -30,8 +27,7 @@ export default defineComponent({
     return {
       correctHitCount: 0,
       errorHitCount: 0,
-      text: "Lorem Ipsum",
-      randomizer: new ExerciseRandomizer(getRandomNumber, codeSnippets.length),
+      text: lorem,
     };
   },
   created() {
@@ -55,8 +51,11 @@ export default defineComponent({
       this.errorHitCount = 0;
       this.setText();
     },
-    setText(): void {
-      this.text = codeSnippets[this.randomizer.getNextExerciseIndex()];
+    async setText(): Promise<void> {
+      const responsePromise = fetch(
+        "https://pattern-palette.onrender.com/random"
+      );
+      this.text = await (await responsePromise).text();
     },
   },
 });
