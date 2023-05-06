@@ -1,7 +1,9 @@
 <template>
   <the-header />
   <stat-display :correctCount="correctHitCount" :errorCount="errorHitCount" />
+  <loading-spinner v-if="!text" />
   <the-type-area
+    v-else
     :text="text"
     @hitType="handleHitResult"
     @finished="resetApp"
@@ -13,8 +15,8 @@ import { defineComponent } from "vue";
 import TheHeader from "./components/TheHeader.vue";
 import TheTypeArea from "./components/TheTypeArea.vue";
 import StatDisplay from "./components/StatDisplay.vue";
+import LoadingSpinner from "./components/LoadingSpinner.vue";
 import { HitType } from "./utils/types";
-import { lorem } from "./utils/consts";
 
 export default defineComponent({
   name: "App",
@@ -22,12 +24,14 @@ export default defineComponent({
     TheHeader,
     TheTypeArea,
     StatDisplay,
+    LoadingSpinner,
   },
   data() {
     return {
       correctHitCount: 0,
       errorHitCount: 0,
-      text: lorem,
+      text: "",
+      backendUrl: "https://pattern-palette.onrender.com/random",
     };
   },
   created() {
@@ -52,10 +56,8 @@ export default defineComponent({
       this.setText();
     },
     async setText(): Promise<void> {
-      const responsePromise = fetch(
-        "https://pattern-palette.onrender.com/random"
-      );
-      this.text = await (await responsePromise).text();
+      const backendPromise = fetch(this.backendUrl);
+      this.text = await (await backendPromise).text();
     },
   },
 });
