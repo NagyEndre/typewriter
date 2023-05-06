@@ -17,7 +17,6 @@
 </template>
 
 <script lang="ts">
-import { newLineCharacter } from "@/utils/consts";
 import { defineComponent } from "vue";
 import { CharacterState, HitType } from "../utils/types";
 import CharacterElement from "./CharacterElement.vue";
@@ -35,6 +34,7 @@ export default defineComponent({
   },
   data() {
     return {
+      newLineCharacter: "\n",
       selectedIndex: 0,
       states: Array(this.text.length).fill(0),
       keysToIgnore: ["Control", "Shift", "AltGraph"],
@@ -70,7 +70,7 @@ export default defineComponent({
     isCorrectHit(key: string): boolean {
       if (
         key === "Enter" &&
-        this.characters[this.selectedIndex] == newLineCharacter
+        this.characters[this.selectedIndex] == this.newLineCharacter
       )
         return true;
       else {
