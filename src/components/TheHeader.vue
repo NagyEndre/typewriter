@@ -26,5 +26,10 @@ header {
 img {
   box-shadow: 0px 0px 20px 10px gold;
   border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+}
+
+img:hover {
+  transform: scale(1.1);
 }
 </style>
