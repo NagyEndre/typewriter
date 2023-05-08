@@ -65,9 +65,8 @@ export default defineComponent({
 
 <style lang="less">
 body {
-  background-color: whitesmoke;
+  background-color: green;
   background-image: url("./assets/plants.jpg");
-  background-repeat: no-repeat;
   background-size: cover;
 }
 #app {
