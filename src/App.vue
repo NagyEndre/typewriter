@@ -69,6 +69,7 @@ body {
   background-image: url("./assets/plants.jpg");
   background-size: cover;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   font-size: 1.5rem;
