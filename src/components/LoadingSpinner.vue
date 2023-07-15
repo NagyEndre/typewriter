@@ -1,7 +1,10 @@
 <template>
   <div class="loading-spinner">
     <div class="spinner"></div>
-    <div id="loading-text">Loading...</div>
+    <div class="loading-text">Loading...</div>
+    <p class="loading-text">
+      Waking up backend.. this might take a minute or two
+    </p>
   </div>
 </template>
 
@@ -14,7 +17,7 @@ export default defineComponent({
 </script>
 
 <style>
-#loading-text {
+.loading-text {
   color: whitesmoke;
 }
 
