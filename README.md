@@ -4,7 +4,7 @@ TypeWriter is a web application that allows users to practice typing design patt
 
 ## Try the TypeWriter!
 
-Visit and try the [deployed TypeWriter](https://eloquent-blini-869a0b.netlify.app/)! The app was built and deployed with the help of [Netlify](https://www.netlify.com/).
+Visit and try the live [TypeWriter](https://codingtypewriter.netlify.app/)!
 
 ## Project setup
 
@@ -42,11 +42,16 @@ npm run test:e2e
 npm run lint
 ```
 
-# Contributing
+## Deployment
+
+The app was built and deployed with the help of [Netlify](https://www.netlify.com/).  
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b41fc78f-3859-4aff-a271-a8ce139d5f0d/deploy-status)](https://app.netlify.com/sites/codingtypewriter/deploys)
+
+## Contributing
 
 If you would like to contribute to this project, please feel free to fork the repository and submit a pull request with your changes.
 
-# License
+## License
 
 This project is licensed under the [MIT License](https://opensource.org/license/mit/).
 
