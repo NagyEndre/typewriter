@@ -1,5 +1,5 @@
 <template>
-  <span :class="characterStyleClasses">{{ character }}</span>
+  <span :class="characterStyleClasses" ref="character">{{ character }}</span>
 </template>
 
 <script lang="ts">

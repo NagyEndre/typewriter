@@ -8,6 +8,7 @@
     <character-element
       v-for="(character, index) in characters"
       :key="`${index}-${character}`"
+      ref="targetElements"
       :character="character"
       :status="states[index]"
       :class="{ current: isCurrent(index) }"
@@ -62,6 +63,7 @@ export default defineComponent({
 
         if (this.isCorrectHit(event.key)) {
           this.handleCorrectHit();
+          this.handleVerticalScroll(event.key);
         } else {
           this.handleWrongHit();
         }
@@ -79,8 +81,9 @@ export default defineComponent({
     },
     handleCorrectHit(): void {
       console.log(`Correct hit`);
-      let status = this.states[this.selectedIndex];
-      if (status !== CharacterState.Wrong) {
+      const notAlreadyMarkedAsWrong =
+        this.states[this.selectedIndex] !== CharacterState.Wrong;
+      if (notAlreadyMarkedAsWrong) {
         this.states[this.selectedIndex] = CharacterState.Correct;
       }
       this.selectedIndex++;
@@ -90,6 +93,15 @@ export default defineComponent({
       console.log("Wrong hit");
       this.states[this.selectedIndex] = CharacterState.Wrong;
       this.$emit("hitType", HitType.Wrong);
+    },
+    handleVerticalScroll(key: string) {
+      if (key === "Enter") {
+        const targets = this.$refs.targetElements as any;
+        targets[this.selectedIndex].$refs.character.scrollIntoView({
+          block: "center",
+          behavior: "smooth",
+        });
+      }
     },
     isCurrent(index: number): boolean {
       return index === this.selectedIndex;
